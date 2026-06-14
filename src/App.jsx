@@ -22,7 +22,7 @@ function App() {
   const calculateMean = (arr) => {
     if (arr.length === 0) return 0
     const sum = arr.reduce((acc, curr) => acc + curr, 0)
-    return (sum / arr.length).toFixed(2)  //2 edcimal places
+    return parseFloat((sum / arr.length).toFixed(2))
   }
 
   // ******** 2. MEDIAN ALGORITHM ********
@@ -31,35 +31,35 @@ function App() {
     const sorted = arr.slice().sort((a, b) => a - b)
     const mid = Math.floor(sorted.length / 2)
 
-    if (sorded[mid] % 2 === 0) { //even
-      return ((sorted[mid - 1] + sorted[mid]) / 2).toFixed(2)
+    if (sorted.length % 2 === 0) { // even length
+      return parseFloat(((sorted[mid - 1] + sorted[mid]) / 2).toFixed(2))
     } else {
-      return sorted[mid].toFixed(2)
+      return parseFloat(sorted[mid].toFixed(2))
     }
   }
 
   // ******** 3. MODE ALGORITHM (frequency map) ********
   const calculateMode = (arr) => {
     if (arr.length === 0) return '-'
-    const frequecyMap = {}
+    const frequencyMap = {}
     let maxFreq = 0
     let modes = []
 
     arr.forEach(num => {
-      frequecyMap[num] = (frequecyMap[num] || 0) + 1
-
+      frequencyMap[num] = (frequencyMap[num] || 0) + 1
       if (frequencyMap[num] > maxFreq) {
-        maxFreq = frequecyMap[num]
+        maxFreq = frequencyMap[num]
       }
-    });
+    })
 
     if (maxFreq === 1) return 'no unique value'
 
     for (const num in frequencyMap) {
       if (frequencyMap[num] === maxFreq) {
-        modes.push(num);
+        modes.push(num)
       }
     }
+
     return modes.join(', ')
   }
 
@@ -67,33 +67,32 @@ function App() {
   const calculateVarianceAndSD = (arr, meanVal) => {
     if (arr.length === 0) return { variance: '-', standardDeviation: '-' }
 
-    const squaredDifferencesSum = arr.reduce((acc, num) => acc + Math.pow(num - meanVal, 2) || 0)
+    const squaredDifferencesSum = arr.reduce((acc, num) => acc + Math.pow(num - meanVal, 2), 0)
     const variance = squaredDifferencesSum / arr.length
     const standardDeviation = Math.sqrt(variance)
 
     return {
-      variance: variance.toFixed(2)
-      , standardDeviation: standardDeviation.toFixed(2)
+      variance: parseFloat(variance.toFixed(2)),
+      standardDeviation: parseFloat(standardDeviation.toFixed(2))
     }
   }
 
   const handleCalculate = () => {
     const data = parseInput()
 
-    const meanVal = parseFloat(calcutateMean(data))
+    const meanVal = calculateMean(data)
     const medianVal = calculateMedian(data)
     const modeVal = calculateMode(data)
-    const { variance, standardDeviation } = calculateVarianceAndSd(data, meanVal)
+    const { variance, standardDeviation } = calculateVarianceAndSD(data, meanVal)
+
+    setMetricValue({
+      mean: meanVal,
+      median: medianVal,
+      mode: modeVal,
+      variance: variance,
+      standardDeviation: standardDeviation
+    })
   }
-
-  setMetrics({
-    mean: meanVal,
-    median: meadianVal,
-    mode: modeVal,
-    variance: variance,
-    standardDeviation: sd
-  });
-
 
   return (
     <div className="parser-container">
@@ -109,16 +108,18 @@ function App() {
           onChange={(e) => setInputValue(e.target.value)}>
         </input>
 
-        <button className="calc-button" onClick={handleCalculate}>~Compute Metrics~</button>
+        <button className="calc-btn" onClick={handleCalculate}>COMPUTE METRICS</button>
 
         <div className="results-grid">
-          <div className="result-card"><h3>Mean (Average)</h3><p>{metrics.mean}</p></div>
-          <div className="result-card"><h3>Median</h3><p>{metrics.median}</p></div>
-          <div className="result-card"><h3>Mode</h3><p>{metrics.mode}</p></div>
-          <div className="result-card"><h3>Variance</h3><p>{metrics.variance}</p></div>
-          <div className="result-card"><h3>Standard Deviation</h3><p>{metrics.standardDeviation}</p></div>
+          <div className="result-card"><h3>Mean (Average)</h3><p>{metricValue.mean}</p></div>
+          <div className="result-card"><h3>Median</h3><p>{metricValue.median}</p></div>
+          <div className="result-card"><h3>Mode</h3><p>{metricValue.mode}</p></div>
+          <div className="result-card"><h3>Variance</h3><p>{metricValue.variance}</p></div>
+          <div className="result-card"><h3>Standard Deviation</h3><p>{metricValue.standardDeviation}</p></div>
         </div>
       </div>
     </div>
   )
 }
+
+export default App

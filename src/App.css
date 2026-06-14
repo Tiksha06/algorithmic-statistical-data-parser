@@ -55,18 +55,26 @@ h2 {
   background-color: #38bdf8;
   color: #0f172a;
   font-size: 16px;
-  font-weight: 600;
-  padding: 12px 25px;
+  font-weight: 700;
+  padding: 14px 28px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   width: 100%;
-  transition: background-color 0.2s;
-  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase; 
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2); 
+  transition: all 0.2s ease-in-out;
 }
 
 .calc-btn:hover {
   background-color: #7dd3fc;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+}
+
+.calc-btn:active {
+  transform: translateY(0);
 }
 
 .results-grid {
