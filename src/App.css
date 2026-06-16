@@ -1,9 +1,17 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #0f172a;
+  overflow-x: hidden;
+  width: 100%;
+}
+
 .parser-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   background-color: #0f172a;
   color: #f8fafc;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
